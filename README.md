@@ -56,3 +56,6 @@ Documentation about how to run this lib is here:
 It's necessary to download DLL from <http://ufal.mff.cuni.cz/udpipe>
 
 Binaries I take from here: <https://github.com/ufal/udpipe/releases/tag/v1.2.0>
+
+# LICENSE 
+
