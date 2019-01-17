@@ -1,4 +1,4 @@
-package org.sbelei.booksvis;
+package org.sbelei.booksvis.nlp;
 
 import java.util.logging.Logger;
 

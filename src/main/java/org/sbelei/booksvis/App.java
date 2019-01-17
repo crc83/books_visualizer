@@ -1,5 +1,7 @@
 package org.sbelei.booksvis;
 
+import org.sbelei.booksvis.nlp.UdpipeFacade;
+
 /**
  * Hello world!
  *
@@ -11,7 +13,7 @@ public class App
 
         String text = "У Сергійка було дев'ять яблук, а в Іринки 4.";
         String processed = udpipe.process(text);
-
+        
         System.out.print(processed);
       }
 }
