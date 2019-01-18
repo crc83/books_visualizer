@@ -14,6 +14,18 @@ public class Word {
         isPlural = t.get(5).contains("Number=Plur");
     }
 
+    public String getWord() {
+        return word;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public boolean isPlural() {
+        return isPlural;
+    }
+
     @Override
     public String toString() {
         return "Word [word=" + word + ", type=" + type + ", isPlural=" + isPlural + "]";

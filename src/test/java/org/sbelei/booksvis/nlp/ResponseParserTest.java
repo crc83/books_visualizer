@@ -2,6 +2,7 @@ package org.sbelei.booksvis.nlp;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.Map;
@@ -31,17 +32,35 @@ public class ResponseParserTest {
                 "10	4	4	NUM	Mlc-n	Case=Nom|NumType=Card|Uninflect=Yes	9	flat:title	_	SpaceAfter=No\r\n" +
                 "11	.	.	PUNCT	U	_	3	punct	_	SpacesAfter=\n";
 
+        ResponseParser parser = new ResponseParser();
 
-        Map<String, Word> result = Pattern.compile("\r?\n")
-            .splitAsStream(conluInput)
-            .filter(p -> !p.startsWith("#")) //ignore comments
-            .map(line ->
-                Pattern.compile("\t").splitAsStream(line)
-                .collect(toCollection(LinkedList<String>::new)))
-            .filter(list -> list.get(3).equals("NUM") || list.get(3).equals("NOUN"))
-            .collect(toMap(t -> t.get(2), t -> new Word(t),(v1, v2)-> v2, LinkedHashMap<String, Word>::new));
+        Map<String, Word> actual = parser.parseModel(conluInput);
 
-        result.values().forEach(System.out::println);
+        actual.values().forEach(System.out::println);
+
+        assertAll(
+                // I expect that order is preserved
+                () -> assertIterableEquals( actual.keySet(), Arrays.asList("Сергійко", "дев’ять", "яблуко", "Іринка", "4")),
+                () -> assertEquals(actual.get("яблуко").getWord(), "яблуко"),
+                () -> assertEquals(actual.get("яблуко").getType(), "NOUN"),
+                () -> assertEquals(actual.get("яблуко").isPlural(), true),
+
+                () -> assertEquals(actual.get("дев’ять").getWord(), "дев’ять"),
+                () -> assertEquals(actual.get("дев’ять").getType(), "NUM"),
+                () -> assertEquals(actual.get("дев’ять").isPlural(), false),
+
+                () -> assertEquals(actual.get("4").getWord(), "4"),
+                () -> assertEquals(actual.get("4").getType(), "NUM"),
+                () -> assertEquals(actual.get("4").isPlural(), false),
+
+                () -> assertEquals(actual.get("Іринка").getWord(), "Іринка"),
+                () -> assertEquals(actual.get("Іринка").getType(), "NOUN"),
+                () -> assertEquals(actual.get("Іринка").isPlural(), false),
+
+                () -> assertEquals(actual.get("Сергійко").getWord(), "Сергійко"),
+                () -> assertEquals(actual.get("Сергійко").getType(), "NOUN"),
+                () -> assertEquals(actual.get("Сергійко").isPlural(), false));
+
     }
 
 
