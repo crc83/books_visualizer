@@ -3,11 +3,7 @@ package org.sbelei.booksvis.nlp;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
 import java.util.Map;
-import java.util.regex.Pattern;
-import static java.util.stream.Collectors.*;
 
 import org.junit.jupiter.api.Test;
 
