@@ -2,3 +2,9 @@ target
 .project
 .classpath
 .settings
+bin
+libs
+.idea
+gen
+/books_visualizer_android/android/lint.xml
+/books_visualizer_android/android/project.properties
