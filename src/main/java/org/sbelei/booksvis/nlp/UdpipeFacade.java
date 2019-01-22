@@ -11,8 +11,8 @@ public class UdpipeFacade {
 
     private Logger LOG = Logger.getLogger(UdpipeFacade.class.getCanonicalName());
 
-    private final String libraryPath = "c:\\projects\\books_visualizer\\dll\\udpipe_java.dll";
-    private final String modelPath = "c:\\projects\\books_visualizer\\dll\\ukrainian-iu-ud-2.3-181115.udpipe";
+    private final String libraryPath = "./dll/udpipe_java.dll";
+    private final String modelPath = "./dll/ukrainian-iu-ud-2.3-181115.udpipe";
 
     private Model model;
     private Pipeline pipeline;
