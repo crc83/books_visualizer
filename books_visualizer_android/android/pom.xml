@@ -18,6 +18,7 @@
         <!-- you can pass these on the command line as -Dkeystore.password=foo etc. -->
         <keystore.password></keystore.password>
         <key.password>${keystore.password}</key.password>
+        <dex.force.jumbo>true</dex.force.jumbo>
     </properties>
 
     <dependencies>
@@ -100,7 +101,7 @@
                     <assetsDirectory>${project.basedir}/../assets</assetsDirectory>
                     <resourceDirectory>${project.basedir}/res</resourceDirectory>
                     <sdk>
-                        <platform>19</platform>
+                        <platform>21</platform>
                     </sdk>
                     <undeployBeforeDeploy>true</undeployBeforeDeploy>
                     <dex>

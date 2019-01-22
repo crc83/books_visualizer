@@ -1,18 +1,15 @@
 package org.sbelei.booksvis.core;
 
 import com.badlogic.gdx.graphics.GL30;
-import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.TextureData;
-import com.badlogic.gdx.graphics.Pixmap.Format;
-import com.badlogic.gdx.graphics.Texture.TextureFilter;
-import com.badlogic.gdx.graphics.TextureData.TextureDataType;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeBitmapFontData;
 import com.badlogic.gdx.utils.Array;
+
+import org.sbelei.booksvis.nlp.UdpipeFacade;
+
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 
@@ -21,9 +18,10 @@ public class BooksVis implements ApplicationListener {
     SpriteBatch batch;
     float elapsed;
     BitmapFont font;
+    /*
     private FreeTypeBitmapFontData font15;
     private FreeTypeBitmapFontData font22;
-
+*/
     @Override
     public void create () {
         texture = new Texture(Gdx.files.internal("libgdx-logo.png"));
@@ -41,7 +39,8 @@ public class BooksVis implements ApplicationListener {
         TextureRegion region = new TextureRegion(textureBackground);
         font = new BitmapFont(font22,region, true); //or use alex answer to use custom font
         */
-        font = generator.generateFont(40, "‡·‚„¥‰Â∫ÊÁË≥øÈÍÎÏÌÓÔÒÚÛÙıˆ˜¯˘¸˛ˇ¿¡¬√•ƒ≈™∆«»≤Ø… ÀÃÕŒœ–—“”‘’÷◊ÿŸ‹ﬁﬂ!.?'\",", false);
+
+        font = generator.generateFont(40, "–∞–±–≤–≥“ë–¥–µ—î–∂–∑–∏—ñ—ó–π–∫–ª–º–Ω–æ–ø—Ä—Å—Ç—É—Ñ—Ö—Ü—á—à—â—å—é—è–ê–ë–í–ì“ê–î–ï–Ñ–ñ–ó–ò–Ü–á–ô–ö–õ–ú–ù–û–ü–†–°–¢–£–§–•–¶–ß–®–©–¨–Æ–Ø!.?'\",0123456789", false);
     }
 
     @Override
@@ -55,8 +54,16 @@ public class BooksVis implements ApplicationListener {
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
         batch.begin();
         if (font != null) {
+
+            UdpipeFacade udpipe = new UdpipeFacade();
+
+            String text = "–£ –°–µ—Ä–≥—ñ–π–∫–∞ –±—É–ª–æ –¥–µ–≤'—è—Ç—å —è–±–ª—É–∫, –∞ –≤ –Ü—Ä–∏–Ω–∫–∏ 4.";
+            String processed = udpipe.process(text);
+
+            System.out.print(processed);
+            font.draw(batch, processed, 550, 550);
+
             //font.draw(batch, "Hello World!", 500, 500);
-            font.draw(batch, "œË‚≥Ú Ò‚≥Ú!!!", 550, 550);
         }
         batch.draw(texture, 100+100*(float)Math.cos(elapsed), 100+25*(float)Math.sin(elapsed));
         batch.end();
