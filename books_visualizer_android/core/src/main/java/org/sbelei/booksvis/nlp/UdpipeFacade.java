@@ -14,7 +14,7 @@ public class UdpipeFacade {
     private final String projectPath = "C:\\projects\\books_visualizer\\books-vis_prototype";
 //    private final String libraryPath = projectPath + "\\dll\\udpipe_java.dll";
 //    private final String modelPath = projectPath + "\\dll\\ukrainian-iu-ud-2.3-181115.udpipe";
-    private final String libraryPath = projectPath + "libudpipe_java.so";
+    private final String libraryPath = projectPath + "lib/arm/libudpipejava.so";
     private final String modelPath = projectPath + "ukrainian-iu-ud-2.3-181115.udpipe";
 
     private Model model;
