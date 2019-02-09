@@ -30,17 +30,19 @@ import org.sbelei.booksvis.pdf.PdfboxFacade;
  * Hello world!
  *
  */
-public class App
-{
+public class App {
     public static void main(String[] args) {
 //        readPdfAndParseItToText();
 //        readParsedTextAndFilterNouns();
-        readWordsFromFileGoogleImagesAndDownloadThem();
-      }
+//        readWordsFromFileGoogleImagesAndDownloadThem();
+        ImageDownlader downloader = new ImageDownlader();
+        downloader.download("машинка");
+
+    }
 
     private static void readPdfAndParseItToText() {
         PdfboxFacade pdfBox = new PdfboxFacade();
-        String rawOutput = pdfBox.parsePdf( "./dll/Bogdanovych_Mat_2ukr_2017.pdf");
+        String rawOutput = pdfBox.parsePdf("./dll/Bogdanovych_Mat_2ukr_2017.pdf");
         rawOutput = rawOutput.replaceAll("\r\n\\d+\\s*\r\n", "");
         rawOutput = rawOutput.replaceAll("­\r\n", "");
         rawOutput = rawOutput.replaceAll("-\r\n", "");
@@ -66,11 +68,11 @@ public class App
         ResponseParser parser = new ResponseParser();
         Map<String, Word> model = parser.parseModel(processed);
 
-        String allWords ="";
-        for (String word :  model.keySet()) {
-            allWords += word +"\r\n";
+        String allWords = "";
+        for (String word : model.keySet()) {
+            allWords += word + "\r\n";
         }
-        save("./out/words.txt",allWords);
+        save("./out/words.txt", allWords);
     }
 
     private static void readWordsFromFileGoogleImagesAndDownloadThem() {
