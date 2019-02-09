@@ -34,10 +34,7 @@ public class App {
     public static void main(String[] args) {
 //        readPdfAndParseItToText();
 //        readParsedTextAndFilterNouns();
-//        readWordsFromFileGoogleImagesAndDownloadThem();
-        ImageDownlader downloader = new ImageDownlader();
-        downloader.download("машинка");
-
+        readWordsFromFileGoogleImagesAndDownloadThem();
     }
 
     private static void readPdfAndParseItToText() {
@@ -84,8 +81,13 @@ public class App {
                 .collect(toCollection(LinkedList<LinkedList<String>>::new));
 
         ImageDownlader downloader = new ImageDownlader();
+        int i = 0;
         for (LinkedList<String> wordsList : wordsEditedCollection) {
             downloader.download(wordsList.getLast());
+            if (i++ > 5) {
+                break;
+                //due to request limit of 100 requests
+            }
         }
     }
 

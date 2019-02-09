@@ -11,21 +11,27 @@ import java.io.PrintStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.List;
 
 import org.json.JSONObject;
+
+import com.jayway.jsonpath.JsonPath;
 
 public class ImageDownlader {
 
     public boolean download(String name) {
         try {
-            JSONObject json = readJsonFromGoogle(name);
+            String json = readJsonFromGoogle(name);
 
-
-            String imageUrl = json.getJSONObject("responseData").getJSONArray("results").getJSONObject(0)
-                    .getString("url");
-            String imageDest = String.format("./pictures/%s.png", name);
-
-            saveImage(imageUrl, imageDest);
+            List<String> imageUrls = JsonPath.read(json, "$.items[*][*].imageobject[*].url");
+            int i =0;
+            for(String imageUrl :imageUrls) {
+                String imageDest = String.format("./pictures/%s-%d.png", name, i++);
+                saveImage(imageUrl, imageDest);
+                if (i>5) {
+                    break;
+                }
+            }
         } catch (Exception e) {
             e.printStackTrace();
             return false;
@@ -33,9 +39,10 @@ public class ImageDownlader {
         return true;
     }
 
-    private JSONObject readJsonFromGoogle(String name) throws MalformedURLException, IOException {
+    @SuppressWarnings("resource")
+    private String readJsonFromGoogle(String name) throws MalformedURLException, IOException {
         String key = System.getenv("GOOGLE_KEY");
-        String urlTemplate = "https://www.googleapis.com/customsearch/v1?%s&q=\"%s\"";
+        String urlTemplate = "https://www.googleapis.com/customsearch/v1/siterestrict?%s&q=\"%s\"&fileType=png&imgType=clipart&searchType=image";
         URL url = new URL(String.format(urlTemplate, key, name));
         URLConnection connection = url.openConnection();
 
@@ -46,13 +53,12 @@ public class ImageDownlader {
             builder.append(line);
         }
         System.out.println(builder.toString());
-        JSONObject json = new JSONObject(builder.toString());
         try {
             new PrintStream("./out/google_responce.json").println(builder.toString());
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        return json;
+        return builder.toString();
     }
 
     public static void saveImage(String imageUrl, String destinationFile) throws IOException {
