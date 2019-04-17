@@ -14,7 +14,7 @@ public class ResponseParser {
         Map<String, Word> result = Pattern.compile("\r?\n")
                 .splitAsStream(conluuInput)
                 .filter(p -> !p.startsWith("#")) //ignore comments
-                .filter(p -> !p.isBlank())
+               // .filter(p -> !p.isBlank())
                 .map(line ->
                     Pattern.compile("\t").splitAsStream(line)
                     .collect(toCollection(LinkedList<String>::new)))
