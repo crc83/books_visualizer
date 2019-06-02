@@ -76,7 +76,7 @@ public class App {
         String wordsEdited = readFile("./out/words_edited.txt", StandardCharsets.UTF_8);
         LinkedList<LinkedList<String>> wordsEditedCollection = Pattern.compile("\r?\n").splitAsStream(wordsEdited)
                 .filter(p -> !p.startsWith("#")) // ignore comments
-                .filter(p -> !p.isBlank())
+                .filter(p -> !(p.trim()).isEmpty())
                 .map(line -> Pattern.compile("&").splitAsStream(line).collect(toCollection(LinkedList<String>::new)))
                 .collect(toCollection(LinkedList<LinkedList<String>>::new));
 
