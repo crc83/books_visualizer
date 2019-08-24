@@ -1,3 +1,21 @@
+# Project structure
+
+## Books vis batch
+
+This project contains steps to prepare assets for android application.
+
+These steps are as follows:
+. Parse PDF to text (I expect correct cyrylic PDF)
+. Get nouns from text
+. User should manually analyze these words if they are meaningful for application
+. Get english translation for all words
+. Group words into synonyms sets
+. Download images for english translations (just works better than for ukrainian cases)
+
+## Book vis android
+
+TBD
+
 # OCR
 
 Evaluate if we can go with Tesseract OCR API.
@@ -15,10 +33,10 @@ and here (*IMHO best choise*):
 All these things work with Tesseract 3.x
 
 # NLP
+
 Read from here : <https://bnosac.github.io/udpipe/docs/doc0.html>
 
-
-
+```
     install.packages("udpipe")
     library(udpipe)
     udmodel <- udpipe_download_model(language = "ukrainian")
@@ -26,11 +44,11 @@ Read from here : <https://bnosac.github.io/udpipe/docs/doc0.html>
     x <- udpipe_annotate(udmodel, x = "Ik ging op reis en ik nam mee: mijn laptop, mijn zonnebril en goed humeur.")
     x <- as.data.frame(x, detailed = TRUE)
     x
-
+```
 or
-
+```
     udpipe_annotate(udmodel, x = iconv('your text', to = 'UTF-8'))
-
+```
 R I downloaded from here : <https://cran.r-project.org/bin/windows/base/>
 
 ## Java bridge for udpipe
@@ -39,12 +57,14 @@ R I downloaded from here : <https://cran.r-project.org/bin/windows/base/>
 
 Maven artifact is described like:
 
+```
     <!-- https://mvnrepository.com/artifact/cz.cuni.mff.ufal.udpipe/udpipe -->
     <dependency>
         <groupId>cz.cuni.mff.ufal.udpipe</groupId>
         <artifactId>udpipe</artifactId>
         <version>1.1.0</version>
     </dependency>
+```
 
 The main site is here <http://ufal.mff.cuni.cz/udpipe>
 
@@ -59,3 +79,4 @@ Binaries I take from here: <https://github.com/ufal/udpipe/releases/tag/v1.2.0>
 
 # LICENSE 
 
+So far it's Apache 2.0 license
