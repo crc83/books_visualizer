@@ -2,10 +2,7 @@ package org.sbelei.booksvis;
 
 import static java.util.stream.Collectors.toCollection;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.PrintStream;
+import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -32,18 +29,20 @@ import org.sbelei.booksvis.pdf.PdfboxFacade;
  */
 public class App {
     public static void main(String[] args) {
-//        readPdfAndParseItToText();
+        readPdfAndParseItToText();
 //        readParsedTextAndFilterNouns();
-        readWordsFromFileGoogleImagesAndDownloadThem();
+//        readWordsFromFileGoogleImagesAndDownloadThem();
     }
 
     private static void readPdfAndParseItToText() {
         PdfboxFacade pdfBox = new PdfboxFacade();
         String rawOutput = pdfBox.parsePdf("./dll/Bogdanovych_Mat_2ukr_2017.pdf");
-        rawOutput = rawOutput.replaceAll("\r\n\\d+\\s*\r\n", "");
-        rawOutput = rawOutput.replaceAll("­\r\n", "");
-        rawOutput = rawOutput.replaceAll("-\r\n", "");
-        rawOutput = rawOutput.replaceAll(" \r\n", " ");
+        try (PrintStream writer = new PrintStream("./out/raw_pdf.txt")) {
+            writer.println(rawOutput);
+        } catch (FileNotFoundException fnfe) {
+            fnfe.printStackTrace();
+        }
+        //rawOutput = filterPdfNoice(rawOutput);
 
         try {
             new PrintStream("./out/raw_text.txt").println(rawOutput);
@@ -60,6 +59,14 @@ public class App {
         System.out.print(processed);
     }
 
+    String filterPdfNoice(String rawOutput) {
+        rawOutput = rawOutput.replaceAll("\r\n\\d+\\s*\r\n", "");
+        rawOutput = rawOutput.replaceAll("­\r\n", "");
+        rawOutput = rawOutput.replaceAll("-\r\n", "");
+        rawOutput = rawOutput.replaceAll(" \r\n", " ");
+        return rawOutput;
+    }
+
     private static void readParsedTextAndFilterNouns() {
         String processed = readFile("./out/processed.txt", StandardCharsets.UTF_8);
         ResponseParser parser = new ResponseParser();
@@ -73,6 +80,7 @@ public class App {
     }
 
     private static void readWordsFromFileGoogleImagesAndDownloadThem() {
+        /*
         String wordsEdited = readFile("./out/words_edited.txt", StandardCharsets.UTF_8);
         LinkedList<LinkedList<String>> wordsEditedCollection = Pattern.compile("\r?\n").splitAsStream(wordsEdited)
                 .filter(p -> !p.startsWith("#")) // ignore comments
@@ -84,11 +92,12 @@ public class App {
         int i = 0;
         for (LinkedList<String> wordsList : wordsEditedCollection) {
             downloader.download(wordsList.getLast());
-            if (i++ > 5) {
+            if (i++ > 7) {
                 break;
                 //due to request limit of 100 requests
             }
         }
+        */
     }
 
     private static String readFile(String path, Charset charset) {

@@ -13,8 +13,6 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.List;
 
-import org.json.JSONObject;
-
 import com.jayway.jsonpath.JsonPath;
 
 public class ImageDownlader {
@@ -23,12 +21,12 @@ public class ImageDownlader {
         try {
             String json = readJsonFromGoogle(name);
 
-            List<String> imageUrls = JsonPath.read(json, "$.items[*][*].imageobject[*].url");
+            List<String> imageUrls = JsonPath.read(json, "$.items[*].link");
             int i =0;
             for(String imageUrl :imageUrls) {
                 String imageDest = String.format("./pictures/%s-%d.png", name, i++);
                 saveImage(imageUrl, imageDest);
-                if (i>5) {
+                if (i>10) {	//google returns 10 images per page. it's enough for us
                     break;
                 }
             }
@@ -41,9 +39,18 @@ public class ImageDownlader {
 
     @SuppressWarnings("resource")
     private String readJsonFromGoogle(String name) throws MalformedURLException, IOException {
-        String key = System.getenv("GOOGLE_KEY");
-        String urlTemplate = "https://www.googleapis.com/customsearch/v1/siterestrict?%s&q=\"%s\"&fileType=png&imgType=clipart&searchType=image";
-        URL url = new URL(String.format(urlTemplate, key, name));
+        String key = System.getenv("GOOGLE_KEY").replaceAll(":", "%3A"); //this is mandatory
+        //String urlTemplate = "https://www.googleapis.com/customsearch/v1/siterestrict?q=\"%s\"&%s&fileType=png";
+        String urlTemplate =
+                "https://www.googleapis.com/customsearch/v1?q=\"%s\"&%s"+
+        "&fileType=png&searchType=image"+	//looking for images png
+        //"&filter=1&gl=ua&hl=ua" + //looking for ukrainian resources
+        "&imgColorType=color" +
+        "&imgSize=large" + //looking for medium color images
+        "&imgType=clipart" +
+//        "&imgType=photo" +
+        "&safe=active"; //safe images (no 18+)
+        URL url = new URL(String.format(urlTemplate, name, key));
         URLConnection connection = url.openConnection();
 
         String line;
@@ -54,7 +61,7 @@ public class ImageDownlader {
         }
         System.out.println(builder.toString());
         try {
-            new PrintStream("./out/google_responce.json").println(builder.toString());
+            new PrintStream("./out/google_responce_"+name+".json").println(builder.toString());
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
