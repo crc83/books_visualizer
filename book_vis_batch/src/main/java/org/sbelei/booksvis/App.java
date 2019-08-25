@@ -27,7 +27,7 @@ import org.sbelei.booksvis.nlp.Word;
 import org.sbelei.booksvis.pdf.PdfboxFacade;
 
 /**
- * Hello world!
+ * This one will be removed. I'm imgrating this to Spring batch.
  *
  */
 public class App {
