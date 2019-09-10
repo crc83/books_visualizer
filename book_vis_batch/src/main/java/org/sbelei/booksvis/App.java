@@ -2,7 +2,6 @@ package org.sbelei.booksvis;
 
 import static java.util.stream.Collectors.toCollection;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintStream;
@@ -10,21 +9,15 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Collection;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-import org.apache.pdfbox.cos.COSDocument;
-import org.apache.pdfbox.io.RandomAccessBufferedFileInputStream;
-import org.apache.pdfbox.pdfparser.PDFParser;
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.text.PDFTextStripper;
 import org.sbelei.booksvis.download.ImageDownlader;
 import org.sbelei.booksvis.nlp.ResponseParser;
 import org.sbelei.booksvis.nlp.UdpipeFacade;
 import org.sbelei.booksvis.nlp.Word;
-import org.sbelei.booksvis.pdf.PdfboxFacade;
+import org.sbelei.booksvis.pdf.PdfboxReader;
 
 /**
  * This one will be removed. I'm imgrating this to Spring batch.
@@ -38,7 +31,7 @@ public class App {
     }
 
     private static void readPdfAndParseItToText() {
-        PdfboxFacade pdfBox = new PdfboxFacade();
+        PdfboxReader pdfBox = new PdfboxReader();
         String rawOutput = pdfBox.parsePdf("./dll/Bogdanovych_Mat_2ukr_2017.pdf");
         rawOutput = rawOutput.replaceAll("\r\n\\d+\\s*\r\n", "");
         rawOutput = rawOutput.replaceAll("­\r\n", "");
