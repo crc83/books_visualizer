@@ -1,4 +1,25 @@
-# Project structure
+# Project motivation
+
+Autism never come alone.
+Alot of kids with autism has dislexia.
+Even if kids has no dislexia, they might have troubles in understanding of texts.
+It could be hard for them to understand math in elementary school if they just can't read challenge.
+
+set of pictures to explain the problem
+
+In Ukraine we have books for elementary school at 
+https://mon.gov.ua/ua/osvita/zagalna-serednya-osvita/pidruchniki/elektronni-pidruchniki/elektronni-pidruchniki-dlya-1-klasu/pidruchniki-dlya-1-klasu-shkil-z-ukrayinskoyu-movoyu-navchannya/matematika-1-klas
+
+The whole idea is to create app that helps to translate challenge from text into set of pictures.
+Kid or teacher or teacher assistant helps to choose challenge on tablet, and application provides scene and set of pictures related to what is written in book.
+This application would be helpful for quick visualization of "what is going on in this book".
+
+picture to explain, how text will be converted to set of pictures
+
+application wireframe placeholder.
+
+The plan is to develop set of tools to be able quickly prepare such set of application.
+First of all I plan to develop it for Ukrainian books.
 
 ## How to build and contribute
 
