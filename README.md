@@ -5,7 +5,7 @@ Alot of kids with autism has dislexia.
 Even if kids has no dislexia, they might have troubles in understanding of texts.
 It could be hard for them to understand math in elementary school if they just can't read challenge.
 
-set of pictures to explain the problem
+[https://youtu.be/hsPoSONTx3I]
 
 In Ukraine we have books for elementary school at 
 https://mon.gov.ua/ua/osvita/zagalna-serednya-osvita/pidruchniki/elektronni-pidruchniki/elektronni-pidruchniki-dlya-1-klasu/pidruchniki-dlya-1-klasu-shkil-z-ukrayinskoyu-movoyu-navchannya/matematika-1-klas
